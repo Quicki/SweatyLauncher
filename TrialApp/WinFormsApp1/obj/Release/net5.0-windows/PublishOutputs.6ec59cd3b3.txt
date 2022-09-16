@@ -1,0 +1,5 @@
+C:\Users\Sweat\Documents\GitHub\SweatyLauncher\published\WinFormsApp1.exe
+C:\Users\Sweat\Documents\GitHub\SweatyLauncher\published\WinFormsApp1.dll
+C:\Users\Sweat\Documents\GitHub\SweatyLauncher\published\WinFormsApp1.deps.json
+C:\Users\Sweat\Documents\GitHub\SweatyLauncher\published\WinFormsApp1.runtimeconfig.json
+C:\Users\Sweat\Documents\GitHub\SweatyLauncher\published\WinFormsApp1.pdb
