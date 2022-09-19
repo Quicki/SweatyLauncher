@@ -4,7 +4,7 @@ color 06
 Mode 130,45
 setlocal EnableDelayedExpansion
 
-::Make Directories
+::Ordner erstellen
 mkdir C:\Sweaty >nul 2>&1
 mkdir C:\Sweaty\Resources >nul 2>&1
 mkdir C:\Sweaty\Launcher >nul 2>&1
@@ -92,7 +92,7 @@ IF "%local%" gtr "%localtwo%" (
 	echo                          	 Update
 	echo  --------------------------------------------------------------
 	echo.
-	echo                   Deine Version: %localtwo%
+	echo               		      Deine Version: %localtwo%
 	echo.
 	echo                          Neue Version: %local%
 	echo.
