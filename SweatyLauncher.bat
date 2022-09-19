@@ -24,6 +24,7 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
 ::Add ANSI escape sequences
 Reg add HKCU\CONSOLE /v VirtualTerminalLevel /t REG_DWORD /d 1 /f >nul 2>&1
 
+goto CheckForUpdates 
 :MainMenu
 Mode 130,45
 TITLE Sweaty Launcher %localtwo%
@@ -74,35 +75,36 @@ goto MainMenu
 powershell
 cd C:\Sweaty\Resources
 
+
 goto MainMenu
 
 :CheckForUpdates
-set local=2.55
+set local=1
 set localtwo=%local%
 if exist "%temp%\Updater.bat" DEL /S /Q /F "%temp%\Updater.bat" >nul 2>&1
-curl -g -L -# -o "%temp%\Updater.bat" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/HoneCtrlVer" >nul 2>&1
+curl -g -L -# -o "%temp%\Updater.bat" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/version" >nul 2>&1
 call "%temp%\Updater.bat"
 IF "%local%" gtr "%localtwo%" (
 	cls
 	Mode 65,16
 	echo.
 	echo  --------------------------------------------------------------
-	echo                           Update found
+	echo                          	 Update
 	echo  --------------------------------------------------------------
 	echo.
-	echo                    Your current version: %localtwo%
+	echo                   Deine Version: %localtwo%
 	echo.
-	echo                          New version: %local%
+	echo                          Neue Version: %local%
 	echo.
 	echo.
 	echo.
-	echo      [Y] Yes, Update
-	echo      [N] No
+	echo      [J] Ja, Update
+	echo      [N] Nein
 	echo.
-	choice /c:YN /n /m "%DEL%                                >:"
+	choice /c:JN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
 	if !choice! equ 1 (
-		curl -L -o %0 "https://github.com/auraside/HoneCtrl/releases/latest/download/HoneCtrl.Bat" >nul 2>&1
+		curl -L -o %0 "https://github.com/Quicki/SweatyLauncher/releases/latest/download/SweatyLauncher.bat" >nul 2>&1
 		call %0
 		exit /b
 	)
