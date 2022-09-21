@@ -25,7 +25,7 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
 Reg add HKCU\CONSOLE /v VirtualTerminalLevel /t REG_DWORD /d 1 /f >nul 2>&1
 
 :: legendary launcher
-if exist "C:\Sweaty\Launcher\legendary.exe" goto MainMenu
+if exist "C:\Sweaty\Launcher\legendary.exe" goto CheckForUpdates
 curl -g -L -# -o "C:\Sweaty\Launcher\legendary-update.ps1" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/legendary-update.ps1" >nul 2>&1
 powershell "C:\Sweaty\Launcher\legendary-update.ps1"
 
@@ -151,7 +151,7 @@ goto MainMenu
 
 
 :CheckForUpdates
-set local=1.04
+set local=1.05
 set localtwo=%local%
 if exist "%temp%\Updater.bat" DEL /S /Q /F "%temp%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%temp%\Updater.bat" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/version" >nul 2>&1
