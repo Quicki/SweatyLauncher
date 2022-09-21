@@ -12,8 +12,8 @@ mkdir C:\Sweaty\Drivers >nul 2>&1
 cd C:\Sweaty
 
 ::Als Admin
-Reg.exe add HKLM /F >nul 2>&1
-if %errorlevel% neq 0 start "" /wait /I /min powershell -NoProfile -Command start -verb runas "'%~s0'" && exit /b
+::Reg.exe add HKLM /F >nul 2>&1
+::if %errorlevel% neq 0 start "" /wait /I /min powershell -NoProfile -Command start -verb runas "'%~s0'" && exit /b
 
 ::Show Detailed BSoD 
 Reg add "HKLM\System\CurrentControlSet\Control\CrashControl" /v "DisplayParameters" /t REG_DWORD /d "1" /f >nul 2>&1
@@ -47,20 +47,17 @@ echo.		        +#+    +#+ +#+#+ +#+       +#+              +#+     +#+    +#+   
 echo.		#+#    #+#     #+#+# #+#+#        #+#              #+#     #+#    #+#           #+#         
 echo.		########       ###   ###         ##########       ###     ###    ###           ###                                                                                                     
 echo.		
-echo. 
-echo.
-echo.
 echo.
 echo.
 echo.
 echo                                           %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Fortnite Starten        %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m Fortnite Settings
 echo.
+echo.						%COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Fortnite Updaten
+echo.																
 echo.
 echo.
 echo.
-echo.
-echo.
-echo.                                                     %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Launcher Update      %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Launcher Settings
+echo.                                                     %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Launcher Update      %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Launcher Settings
 echo.
 echo.
 echo.
@@ -70,14 +67,16 @@ choice /c:1234567X /n /m "%DEL%                                                 
 set choice=%errorlevel%
 if "%choice%"=="1" call:FortniteStarten
 if "%choice%"=="2" call:FortniteS
-if "%choice%"=="3" call:LegendaryUpdate
-if "%choice%"=="4" call:Comingsoon
+if "%choice%"=="3" call:FortniteUpdate
+if "%choice%"=="4" call:LegendaryUpdate
 if "%choice%"=="5" call:Comingsoon
 if "%choice%"=="6" call:Comingsoon
 if "%choice%"=="X" call:exit
 if "%choice%"=="8" call:exit
 goto MainMenu
 
+
+:: Fortnite Legendary start&update
 :FortniteStarten
 cd C:\Sweaty\Launcher\
 legendary.exe update Fornite
@@ -85,6 +84,13 @@ legendary.exe launch Fortnite
 cls
 goto MainMenu
 
+:FortniteUpdate
+cd C:\Sweaty\Launcher\
+legendary.exe update Fortnite
+pause
+cls
+goto MainMenu
+:: Legendary Auth
 :EpicLogin
 cd C:\Sweaty\Launcher\
 legendary.exe auth
@@ -113,8 +119,39 @@ goto FortniteS
 powershell "C:\Sweaty\Launcher\legendary-update.ps1"
 goto MainMenu
 
+:ForniteConfigReset
+rmdir /s /q "C:\Users\%username%\AppData\Local\FortniteGame"
+pause
+goto FortniteS
+
+
+:Cleaner
+cls
+rmdir /S /Q "C:\Sweaty\Resources\DeviceCleanupCmd\"
+del /F /Q "C:\Sweaty\Resources\AdwCleaner.exe"
+del /F /Q "C:\Sweaty\Resources\EmptyStandbyList.exe"
+curl -g -L -# -o "C:\Sweaty\Resources\EmptyStandbyList.exe" "https://wj32.org/wp/download/1455/"
+curl -g -L -# -o "C:\Sweaty\Resources\DeviceCleanupCmd.zip" "https://www.uwe-sieber.de/files/DeviceCleanupCmd.zip"
+curl -g -L -# -o "C:\Sweaty\Resources\AdwCleaner.exe" "https://adwcleaner.malwarebytes.com/adwcleaner?channel=release"
+powershell -NoProfile Expand-Archive 'C:\Sweaty\Resources\DeviceCleanupCmd.zip' -DestinationPath 'C:\Sweaty\Resources\DeviceCleanupCmd\'
+del /F /Q "C:\Sweaty\Resources\DeviceCleanupCmd.zip"
+del /Q C:\Users\%username%\AppData\Local\Microsoft\Windows\INetCache\IE\*.*
+del /Q C:\Windows\Downloaded Program Files\*.*
+rd /s /q %SYSTEMDRIVE%\$Recycle.bin
+del /Q C:\Users\%username%\AppData\Local\Temp\*.*
+del /Q C:\Windows\Temp\*.*
+del /Q C:\Windows\Prefetch\*.*
+cd C:\Sweaty\Resources
+AdwCleaner.exe /eula /clean /noreboot
+for %%g in (workingsets modifiedpagelist standbylist priority0standbylist) do EmptyStandbyList.exe %%g
+cd "C:\Sweaty\Resources\DeviceCleanupCmd\x64"
+DeviceCleanupCmd.exe *
+goto MainMenu
+
+
+
 :CheckForUpdates
-set local=1.03
+set local=1.04
 set localtwo=%local%
 if exist "%temp%\Updater.bat" DEL /S /Q /F "%temp%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%temp%\Updater.bat" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/version" >nul 2>&1
@@ -171,11 +208,11 @@ echo.
 echo                                           %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Epic Login       %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m Fortnite reparieren
 echo.
 echo.
+echo.					%COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Fortnite config reset
 echo.
 echo.
 echo.
-echo.
-echo.                                                     %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Fortnite installieren     %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Fortnite verify
+echo.                                                     %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Fortnite installieren     %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Fortnite verify
 echo.
 echo.
 echo.
@@ -185,8 +222,9 @@ choice /c:1234567X /n /m "%DEL%                                                 
 set choice=%errorlevel%
 if "%choice%"=="1" call:EpicLogin
 if "%choice%"=="2" call:FortniteRepair
-if "%choice%"=="3" call:FortniteInstall
-if "%choice%"=="4" call:FortniteVerify
+if "%choice%"=="3" call:ForniteConfigReset
+if "%choice%"=="4" call:FortniteInstall
+if "%choice%"=="5" call:FortniteVerify
 goto MainMenu
 
 
