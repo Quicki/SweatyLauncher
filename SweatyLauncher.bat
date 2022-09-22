@@ -79,14 +79,13 @@ goto MainMenu
 :: Fortnite Legendary start&update
 :FortniteStarten
 cd C:\Sweaty\Launcher\
-legendary.exe update Fornite
 legendary.exe launch Fortnite
 cls
 goto MainMenu
 
 :FortniteUpdate
 cd C:\Sweaty\Launcher\
-legendary.exe update Fortnite
+legendary.exe update Fortnite --force --skip-sdl -y
 pause
 cls
 goto MainMenu
@@ -151,7 +150,7 @@ goto MainMenu
 
 
 :CheckForUpdates
-set local=1.05
+set local=1.06
 set localtwo=%local%
 if exist "%temp%\Updater.bat" DEL /S /Q /F "%temp%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%temp%\Updater.bat" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/version" >nul 2>&1
