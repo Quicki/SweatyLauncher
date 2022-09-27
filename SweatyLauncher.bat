@@ -24,10 +24,12 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
 ::Add ANSI escape sequences
 Reg add HKCU\CONSOLE /v VirtualTerminalLevel /t REG_DWORD /d 1 /f >nul 2>&1
 
-:: legendary launcher
-if exist "C:\Sweaty\Launcher\legendary.exe" goto CheckForUpdates
-curl -g -L -# -o "C:\Sweaty\Launcher\legendary-update.ps1" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/legendary-update.ps1" >nul 2>&1
-powershell "C:\Sweaty\Launcher\legendary-update.ps1"
+
+:: Rare-Windows launcher
+if exist "C:\Sweaty\Launcher\Rare-Windows-1.9.0.msi" goto CheckForUpdates
+curl -g -L -# -o "C:\Sweaty\Launcher\Rare-Windows-1.9.0.msi" "https://github.com/Dummerle/Rare/releases/download/1.9.0/Rare-Windows-1.9.0.msi" >nul 2>&1
+cd C:\Sweaty\Launcher\
+Rare-Windows-1.9.0.msi /quiet
 
 :: Update Check
 goto CheckForUpdates 
@@ -150,7 +152,7 @@ goto MainMenu
 
 
 :CheckForUpdates
-set local=1.07
+set local=1.08
 set localtwo=%local%
 if exist "%temp%\Updater.bat" DEL /S /Q /F "%temp%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%temp%\Updater.bat" "https://raw.githubusercontent.com/Quicki/SweatyLauncher/main/Data/version" >nul 2>&1
